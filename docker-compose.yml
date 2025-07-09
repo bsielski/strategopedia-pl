@@ -1,0 +1,36 @@
+services:
+
+  dokuwiki-dev:
+    image: lscr.io/linuxserver/dokuwiki:latest
+    profiles: ["development"]
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=Europe/Warsaw
+    ports:
+      - "${DEV_PORT:-8080}:80"
+    volumes:
+      - ./data:/config
+
+  dokuwiki-prod:
+    image: lscr.io/linuxserver/dokuwiki:latest
+    restart: unless-stopped
+    profiles: ["production"]
+    networks:
+      - webproxy
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=Europe/Warsaw
+    volumes:
+      - ./data:/config
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.${PROJECT_NAME}.rule=Host(`${DOMAIN}`)"
+      - "traefik.http.routers.${PROJECT_NAME}.entrypoints=websecure"
+      - "traefik.http.routers.${PROJECT_NAME}.tls.certresolver=myresolver"
+      - "traefik.http.services.${PROJECT_NAME}.loadbalancer.server.port=80"
+
+networks:
+  webproxy:
+    external: true
