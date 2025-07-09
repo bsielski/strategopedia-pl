@@ -1,7 +1,7 @@
 services:
 
   dokuwiki-dev:
-    image: lscr.io/linuxserver/dokuwiki:latest
+    image: linuxserver/dokuwiki:2025-05-14a-ls271
     profiles: ["development"]
     environment:
       - PUID=1000
@@ -13,7 +13,7 @@ services:
       - ./data:/config
 
   dokuwiki-prod:
-    image: lscr.io/linuxserver/dokuwiki:latest
+    image: linuxserver/dokuwiki:2025-05-14a-ls271
     restart: unless-stopped
     profiles: ["production"]
     networks:
