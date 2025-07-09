@@ -31,6 +31,44 @@ services:
       - "traefik.http.routers.${PROJECT_NAME}.tls.certresolver=myresolver"
       - "traefik.http.services.${PROJECT_NAME}.loadbalancer.server.port=80"
 
+  backup-dev:
+    image: alpine:3.18
+    profiles: ["development"]
+    depends_on:
+      - dokuwiki-dev
+    user: "${PUID:-1000}:${PGID:-1000}"
+    environment:
+      - BACKUP_FREQ=${BACKUP_FREQ:-240}
+      - RETENTION_DAYS=${RETENTION_DAYS:-30}
+      - ENVIRONMENT=development
+      - PUID=${PUID:-1000}
+      - PGID=${PGID:-1000}
+    volumes:
+      - ./data:/config:ro
+      - ./backups:/backups
+      - ./scripts:/app:ro
+    command: /app/run-backup.sh
+    restart: unless-stopped
+
+  backup-prod:
+    image: alpine:3.18
+    profiles: ["production"]
+    depends_on:
+      - dokuwiki-prod
+    user: "${PUID:-1000}:${PGID:-1000}"
+    environment:
+      - BACKUP_FREQ=${BACKUP_FREQ:-240}
+      - RETENTION_DAYS=${RETENTION_DAYS:-30}
+      - ENVIRONMENT=production
+      - PUID=${PUID:-1000}
+      - PGID=${PGID:-1000}
+    volumes:
+      - ./data:/config:ro
+      - ./backups:/backups
+      - ./scripts:/app:ro
+    command: /app/run-backup.sh
+    restart: unless-stopped
+
 networks:
   webproxy:
     external: true
