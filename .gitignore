@@ -1,3 +1,11 @@
 .env
-/data/
 /backups/
+
+# Ignore everything in data/ initially, but do NOT ignore the contents of 'lang' inside ./data/dokuwiki/conf/lang/
+/data/*
+!/data/dokuwiki/
+/data/dokuwiki/*
+!/data/dokuwiki/conf/
+/data/dokuwiki/conf/*
+!/data/dokuwiki/conf/lang/
+!/data/dokuwiki/conf/lang/**
