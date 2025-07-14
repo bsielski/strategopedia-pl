@@ -1,2 +1,2 @@
-Zredaguj tę stronę i naciśnij ''zapisz''. Na stronie ze [[wiki:skladnia|składnią]] znajdziesz opis znaczników wiki.
-Jeśli chcesz poćwiczyć, zajrzyj do [[piaskownica/|piaskownicy]].
+Zredaguj tę stronę i naciśnij ''zapisz''. Na stronie ze [[Wiki/Instrukcja Edytowania]] dowiesz się jak edytować Strategopedię.
+Jeśli chcesz poćwiczyć, zajrzyj do [[Piaskownica/|Piaskownicy]].
